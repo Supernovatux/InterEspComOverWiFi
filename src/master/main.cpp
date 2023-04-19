@@ -40,9 +40,9 @@ void loop() {
        
       webpage+="<th> \n";       
         if(newdev.nodes[i].sensors[j].status){
-        webpage +="<p> LED: ON</p><a class=\"button button-off\" href=\"/ledoff\">OFF</a>\n";
+        webpage +=String("<p> LED: ON</p><a class=\"button button-off\" href=\"/ledoff?message=")+String(i)+String(",")+String(j)+String("\">OFF</a>\n");
         }else{
-        webpage +="<p> LED: OFF</p><a class=\"button button-on\" href=\"/ledon\">ON</a>\n";
+        webpage +=String("<p> LED: OFF</p><a class=\"button button-on\" href=\"/ledon?message=")+String(i)+String(",")+String(j)+String("\">ON</a>\n");
         } 
       webpage+="</th>";
       
