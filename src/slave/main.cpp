@@ -8,13 +8,13 @@
 #include <Arduino.h>
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WiFi.h>
-#include <ESPAsyncTCP.h>
 #include <ESPAsyncWebServer.h>
+#include <ESPAsyncTCP.h>
 #include <WiFiClient.h>
 
 const char *ssid = USERNAME;
 const char *password = PASSWORD;
-const char *serverName = "http://192.168.4.1/post";
+const char *serverName = "http://192.168.4.1/";
 const char *PARAM_MESSAGE = "message";
 String serialInp = "";
 unsigned long lastTime = 0;
@@ -26,6 +26,9 @@ unsigned long timerDelay = 2000;
 void setup() {
   Serial.begin(BAUD_RATE);
   WiFi.begin(ssid, password);
+  WiFi.softAPConfig(IPAddress(192, 168, 5, 1), IPAddress(192, 168, 5, 1),
+                    IPAddress(255, 255, 255, 0));
+  WiFi.softAP("hiii", "12345678", 2);
   Serial.println("Connecting");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
@@ -44,17 +47,18 @@ void loop() {
       HTTPClient http;
       // Your Domain name with URL path or IP address with path
       http.begin(client, serverName);
-      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
-      int httpResponseCode = http.POST(serialInp);
+      int httpResponseCode = http.GET();
       Serial.print("HTTP Response code: ");
       Serial.println(httpResponseCode);
-      // Free resources
+      if (httpResponseCode > 0) {
+        Serial.print("HTTP Response code: ");
+        Serial.println(httpResponseCode);
+        String payload = http.getString();
+        Serial.println(payload);
+      }
       http.end();
-    } else {
+    } else
       Serial.println("WiFi Disconnected");
-    }
     lastTime = millis();
-    if (Serial.available() > 0)
-      serialInp = Serial.readString();
   }
 }
