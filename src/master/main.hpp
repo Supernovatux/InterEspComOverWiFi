@@ -11,6 +11,7 @@
 #include "data_struct.hpp"
 const char *ssid = USERNAME;
 const char *password = PASSWORD;
+static const char *PARAM_MESSAGE="message";
 static const char *Header = "<!DOCTYPE html>\n"
 "<html>\n"
 "<head>\n"
