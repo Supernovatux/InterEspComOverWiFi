@@ -30,4 +30,29 @@ void setup() {
 }
 
 void loop() {
+  webpage="";
+  webpage+=Header;
+  for(int i=0;i<2;i++){
+     webpage+="<tr>";
+     webpage+="<th>";
+     webpage+=String("<p> Device ")+String(i)+String("</p></th>");
+     for(int j=0;j<5;j++){
+       
+      webpage+="<th> \n";       
+        if(newdev.nodes[i].sensors[j].status){
+        webpage +="<p> LED: ON</p><a class=\"button button-off\" href=\"/ledoff\">OFF</a>\n";
+        }else{
+        webpage +="<p> LED: OFF</p><a class=\"button button-on\" href=\"/ledon\">ON</a>\n";
+        } 
+      webpage+="</th>";
+      
+     }
+  webpage+="</tr>"; 
+  
+  }
+  delay(3000);
+  newdev.devicesTojson(doc);
+  serializeJson(doc, JsonTxt);
+
+
 }
