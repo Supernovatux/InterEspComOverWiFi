@@ -26,9 +26,9 @@ unsigned long timerDelay = 2000;
 void setup() {
   Serial.begin(BAUD_RATE);
   WiFi.begin(ssid, password);
-  WiFi.softAPConfig(IPAddress(192, 168, 5, 1), IPAddress(192, 168, 5, 1),
+  WiFi.softAPConfig(IPAddress(192, 168, DEVICE, 1), IPAddress(192, 168, DEVICE, 1),
                     IPAddress(255, 255, 255, 0));
-  WiFi.softAP("hiii", "12345678", 2);
+  WiFi.softAP(String("NodeMCU") + String(DEVICE), "12345678",DEVICE);
   Serial.println("Connecting");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
