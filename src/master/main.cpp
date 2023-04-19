@@ -21,7 +21,7 @@ void setup() {
   });
 
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
-    request->send(200, "text/plain", webpage);
+    request->send(200, "text/html", webpage);
   });
 
   server.onNotFound(notFound);
