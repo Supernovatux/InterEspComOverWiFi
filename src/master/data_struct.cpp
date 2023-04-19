@@ -16,10 +16,10 @@ void devices::devicesTojson(StaticJsonDocument<2048> &doc) {
     JsonObject devices_0 = devices.createNestedObject();
     devices_0["id"] = i.id;
     JsonArray devices_0_sensors = devices_0.createNestedArray("sensors");
-    for (sensor &i : i.sensors) {
+    for (sensor &j : i.sensors) {
       JsonObject devices_0_sensors_0 = devices_0_sensors.createNestedObject();
-      devices_0_sensors_0["sensorID"] = i.id;
-      devices_0_sensors_0["value"] = i.status;
+      devices_0_sensors_0["sensorID"] = j.id;
+      devices_0_sensors_0["value"] = j.status;
     }
   }
 }
