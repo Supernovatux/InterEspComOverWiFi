@@ -1,10 +1,3 @@
-//
-// A simple server implementation showing how to:
-//  * serve static messages
-//  * read GET and POST parameters
-//  * handle missing pages / 404s
-//
-
 #include <Arduino.h>
 #include <ESP8266HTTPClient.h>
 #include <ESP8266WiFi.h>
@@ -15,18 +8,14 @@
 const char *ssid = USERNAME;
 const char *password = PASSWORD;
 const char *serverName = "http://192.168.4.1/";
-const char *PARAM_MESSAGE = "message";
 String serialInp = "";
 unsigned long lastTime = 0;
-// Timer set to 10 minutes (600000)
-// unsigned long timerDelay = 600000;
-// Set timer to 5 seconds (5000)
 unsigned long timerDelay = 2000;
 
 void setup() {
   Serial.begin(BAUD_RATE);
   WiFi.begin(ssid, password);
-  WiFi.softAPConfig(IPAddress(192, 168, DEVICE, 1), IPAddress(192, 168, DEVICE, 1),
+  WiFi.softAPConfig(IPAddress(192, 168, DEVICE+1, 1), IPAddress(192, 168, DEVICE+1, 1),
                     IPAddress(255, 255, 255, 0));
   WiFi.softAP(String("NodeMCU") + String(DEVICE), "12345678",DEVICE);
   Serial.println("Connecting");

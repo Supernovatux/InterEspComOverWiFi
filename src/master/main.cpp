@@ -1,36 +1,27 @@
 #include "main.hpp"
 AsyncWebServer server(80);
-String message = "";
+String webpage = "";
+char JsonTxt[2046];
 void notFound(AsyncWebServerRequest *request) {
   request->send(404, "text/plain", "Not found");
 }
-StaticJsonDocument<2048> doc;
+DynamicJsonDocument doc(2048);
+devices newdev;
 void setup() {
-  devices newdev;
+  Serial.begin(BAUD_RATE);
   newdev.saneDefaults();
   newdev.devicesTojson(doc);
-  serializeJson(doc, message);
-  Serial.begin(BAUD_RATE);
+  serializeJson(doc, JsonTxt);
+  WiFi.softAPConfig(IPAddress(192, 168, DEVICE+1, 1), IPAddress(192, 168, DEVICE+1, 1),
+                    IPAddress(255, 255, 255, 0));
   WiFi.softAP(ssid, password);
-  Serial.print("IP Address: ");
-  Serial.println(WiFi.softAPIP());
+
+  server.on("/get", HTTP_GET, [](AsyncWebServerRequest *request) {
+    request->send(200, "application/json", JsonTxt);
+  });
 
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request) {
-    request->send(200, "application/json", message);
-  });
-
-  // Send a GET request to <IP>/get?message=<message>
-  server.on("/get", HTTP_GET, [](AsyncWebServerRequest *request) {
-    request->send(200, "text/plain", "Hello, GET: " + message);
-  });
-
-  // Send a POST request to <IP>/post with a form field message set to <message>
-  server.on("/post", HTTP_POST, [](AsyncWebServerRequest *request) {
-    if (request->hasParam(PARAM_MESSAGE, true)) {
-      message = request->getParam(0)->value();
-      Serial.println(message);
-    }
-    request->send(200, "text/plain", "Hello, POST: " + message);
+    request->send(200, "text/plain", webpage);
   });
 
   server.onNotFound(notFound);
@@ -38,4 +29,5 @@ void setup() {
   server.begin();
 }
 
-void loop() {}
+void loop() {
+}
