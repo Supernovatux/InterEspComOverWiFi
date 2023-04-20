@@ -1,15 +1,15 @@
 #pragma once
 #include <Arduino.h>
-#define ARDUINOJSON_USE_LONG_LONG 0
-#define ARDUINOJSON_USE_DOUBLE 0
-#include <ArduinoJson.h>
-#include <Vector.h>
+#include <StringSplitter.hpp>
 #define SERVO 0
 #define LED1 1
 #define LED2 2
 #define LED3 3
 #define LED_BUILTIN_T 4
-
+#ifndef NUM_DEV
+#define NUM_DEV 2
+#define NUM_SENSOR 5
+#endif
 class sensor {
 public:
   sensor() { sensor(SERVO, 90); }
@@ -31,5 +31,7 @@ public:
   devices() {}
   void saneDefaults();
   device nodes[NUM_DEV];
-  void devicesTojson(DynamicJsonDocument &doc);
+  void devicesTotext(String &doc);
+  void textTodevices(String &doc);
+  void changeHardware();
 };

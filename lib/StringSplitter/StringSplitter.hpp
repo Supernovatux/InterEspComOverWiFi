@@ -3,7 +3,7 @@
    delimiter. Created by Harsha C. Alva, November 26, 2016. Released into the
    public domain.
 */
-
+#pragma once
 #ifndef StringSplitter_h
 #define StringSplitter_h
 
