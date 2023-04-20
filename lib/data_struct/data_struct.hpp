@@ -12,26 +12,29 @@
 #endif
 class sensor {
 public:
-  sensor() { sensor(SERVO, 90); }
-  sensor(long id, int status) : id(id), status(status){};
-  long id;
-  long status;
+    sensor() { sensor(SERVO, 90); }
+    sensor(long id, int status)
+        : id(id)
+        , status(status) {};
+    long id;
+    long status;
 };
 
 class device {
 public:
-  device() { device(DEVICE); }
-  device(long id) : id(id){};
-  long id;
-  sensor sensors[NUM_SENSOR];
+    device() { device(DEVICE); }
+    device(long id)
+        : id(id) {};
+    long id;
+    sensor sensors[NUM_SENSOR];
 };
 
 class devices {
 public:
-  devices() {}
-  void saneDefaults();
-  device nodes[NUM_DEV];
-  void devicesTotext(String &doc);
-  void textTodevices(String &doc);
-  void changeHardware();
+    devices() { }
+    void saneDefaults();
+    device nodes[NUM_DEV];
+    void devicesTotext(String& doc);
+    void textTodevices(String& doc);
+    void changeHardware();
 };
