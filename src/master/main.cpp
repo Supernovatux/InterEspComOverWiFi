@@ -58,17 +58,21 @@ void setup()
 
 void loop()
 {
-  webpage = "";
-  webpage += Header;
+  webpage = Header;
+  webpage += "<tr>";
   for (int i = 0; i < 2; i++)
   {
-    webpage += "<tr>";
     webpage += "<th>";
     webpage += String("<p> Device ") + String(i) + String("</p></th>");
-    for (int j = 0; j < 5; j++)
-    {
+  }
+  webpage += "</tr>";
 
-      webpage += "<th> \n";
+  for (int j = 0; j < 5; j++)
+  {
+    webpage += "<tr>";
+    for (int i = 0; i < 2; i++)
+    {
+      webpage += "<td>";
       if (newdev.nodes[i].sensors[j].status)
       {
         webpage += String("<p> LED: ON</p><a class=\"button button-off\" href=\"/ledoff?message=") + String(i) + String(",") + String(j) + String("\">OFF</a>\n");
@@ -77,11 +81,11 @@ void loop()
       {
         webpage += String("<p> LED: OFF</p><a class=\"button button-on\" href=\"/ledon?message=") + String(i) + String(",") + String(j) + String("\">ON</a>\n");
       }
-      webpage += "</th>";
+      webpage += "</td>";
     }
-    webpage += "</tr>";
   }
-  delay(1000);
-  newdev.devicesTojson(doc);
-  serializeJson(doc, JsonTxt);
+  webpage += "</tr></table>";
+delay(1000);
+newdev.devicesTojson(doc);
+serializeJson(doc, JsonTxt);
 }
