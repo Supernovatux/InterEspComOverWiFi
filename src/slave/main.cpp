@@ -6,6 +6,11 @@ unsigned long timerDelay = 2000;
 
 void setup()
 {
+  pinMode(D0,OUTPUT);
+  pinMode(D1,OUTPUT);
+  pinMode(D2,OUTPUT);
+  pinMode(D3,OUTPUT);
+  pinMode(D4,OUTPUT);
   Serial.begin(BAUD_RATE);
   WiFi.begin(ssid, password);
   WiFi.softAPConfig(IPAddress(192, 168, DEVICE + 1, 1), IPAddress(192, 168, DEVICE + 1, 1),
@@ -65,6 +70,7 @@ void loop()
         {
           int device_sensor_sensorID = device_sensor["sensorID"];
           int device_sensor_value = device_sensor["value"];
+          Serial.printf("Device: %d, SensorID: %d, Value: %d", DEVICE, device_sensor_sensorID, device_sensor_value);
           if(device_sensor_sensorID==LED_BUILTIN_T){
             digitalWrite(LED_BUILTIN, device_sensor_value);
           }else if (device_sensor_sensorID==LED1){
